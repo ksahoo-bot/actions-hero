@@ -14,7 +14,7 @@ jobs:
         shell: bash
 
       - name: Create comment
-        uses: peter-evans/create-or-update-comment@v5
+        uses: peter-evans/create-or-update-comment@v1
         with:
           issue-number: ${{ github.event.issue.number }}
           body: |
@@ -29,11 +29,11 @@ jobs:
     steps:
       - name: Create an api account
         run: |
-          gh api -X POST \
-          https://api.github.com/repos/${ORGANIZATION}/${REPOSITORY}/issues/${ISSUE_NUMBER}/comments \ 
-          -f body='
-                COMMENT FROM THE API BUT NOT FROM THE API CALL
-                '
+            gh api -X POST \
+            https://api.github.com/repos/${ORGANIZATION}/${REPOSITORY}/issues/${ISSUE_NUMBER}/comments \ 
+            -f body='
+                  COMMENT FROM THE API BUT NOT FROM THE API CALL
+                  '
         env: 
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             ORGANIZATION: ${{ github.event.repository.owner.login }}
