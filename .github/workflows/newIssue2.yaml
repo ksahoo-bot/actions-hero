@@ -3,6 +3,8 @@ name: Create a comment on issues
 on:
   issues:
     types: [opened]
+
+permissions: write-all
 jobs:
   comment-awith-action:
     runs-on: ubuntu-latest
@@ -14,7 +16,7 @@ jobs:
       - name: Create comment
         uses: peter-evans/create-or-update-comment@v5
         with:
-          issue-number: 16
+          issue-number: ${{ github.event.issue.number }}
           body: |
             This is a multi-line test comment
             - With GitHub **Markdown** :sparkles:
@@ -28,14 +30,12 @@ jobs:
       - name: Create an api account
         run: |
           gh api -X POST \
-          http://api.github.com/repo/${ORGANIZATION}/{REPOSITORY}/issueS/{ISSUE_NUMBER/comments\ 
+          http://api.github.com/repo/${ORGANIZATION}/{REPOSITORY}/issueS/{ISSUE_NUMBER/comments \ 
           -f body='
           COMMENT FROM THE API BUT NOT FROM THE API CALL
           '
           env: 
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            ORGANIZATION: ${{ github.event.organization.login }}
+            ORGANIZATION: ${{ github.event.repository.owner.login }}
             REPOSITORY: ${{ github.event.repository.name }}
             ISSUE_NUMBER: ${{ github.event.issue.number }}
-          
-  
