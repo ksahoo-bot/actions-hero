@@ -30,11 +30,11 @@ jobs:
       - name: Create an api account
         run: |
           gh api -X POST \
-          https://api.github.com/repo/${ORGANIZATION}/{REPOSITORY}/issues/{ISSUE_NUMBER}/comments \ 
+          https://api.github.com/repos/${ORGANIZATION}/{REPOSITORY}/issues/{ISSUE_NUMBER}/comments \ 
           -f body='
-          COMMENT FROM THE API BUT NOT FROM THE API CALL
-          '
-          env: 
+                COMMENT FROM THE API BUT NOT FROM THE API CALL
+                '
+        env: 
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             ORGANIZATION: ${{ github.event.repository.owner.login }}
             REPOSITORY: ${{ github.event.repository.name }}
